@@ -1,6 +1,6 @@
 import { SharedObject } from 'expo';
 import { useState } from 'react';
-import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Button, StyleSheet, Text, TextInput, View, ScrollView } from 'react-native';
 
 export default function App() {
   const [enteredGoalText, setEnteredGoalText] = useState('');
@@ -13,7 +13,6 @@ export default function App() {
 
   function addGoalHandler() {
     setCourseGoals((currentCourseGoals) => [...currentCourseGoals, enteredGoalText]);
-    setEnteredGoalText(() => '');
   }
 
   return (
@@ -23,13 +22,15 @@ export default function App() {
         <Button title='Add Goal' onPress={addGoalHandler} />
       </View>
       <View style={styles.goalsContainer}>
-        {courseGoals.map((goal, index) => (
-          <View style={styles.goalItem} key={`${goal}-${index}`}>
-            <Text style={styles.goalText} >
-              {goal}
-            </Text>
-          </View>
-        ))}
+        <ScrollView>
+          {courseGoals.map((goal, index) => (
+            <View style={styles.goalItem} key={`${goal}-${index}`}>
+              <Text style={styles.goalText} >
+                {goal}
+              </Text>
+            </View>
+          ))}
+        </ScrollView>
       </View>
     </View>
   );
