@@ -29,7 +29,7 @@ export default function App() {
           return (
             <GoalItem
               text={itemData.item.text}
-              key={itemData.item.key}
+              id={itemData.item.key}
               onDeleteItem={deleteGoalHandler}
             />
           )
