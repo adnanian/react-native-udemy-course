@@ -1,6 +1,5 @@
-import { SharedObject } from 'expo';
 import { useState } from 'react';
-import { Button, StyleSheet, Text, TextInput, View, ScrollView } from 'react-native';
+import { Button, StyleSheet, Text, TextInput, View, ScrollView, FlatList } from 'react-native';
 
 export default function App() {
   const [enteredGoalText, setEnteredGoalText] = useState('');
@@ -12,17 +11,35 @@ export default function App() {
   }
 
   function addGoalHandler() {
-    setCourseGoals((currentCourseGoals) => [...currentCourseGoals, enteredGoalText]);
+    setCourseGoals((currentCourseGoals) => [...currentCourseGoals, { text: enteredGoalText, key: Math.random().toString() }]);
+    setEnteredGoalText('');
   }
 
   return (
     <View style={styles.appContainer}>
       <View style={styles.inputContainer}>
-        <TextInput style={styles.textInput} placeholder='Your course goal!' onChangeText={goalInputHandler} />
+        <TextInput
+          style={styles.textInput}
+          placeholder='Your course goal!'
+          onChangeText={goalInputHandler}
+          value={enteredGoalText}
+        />
         <Button title='Add Goal' onPress={addGoalHandler} />
       </View>
       <View style={styles.goalsContainer}>
-        <ScrollView>
+        <FlatList data={courseGoals} renderItem={(itemData) => {
+          return (
+            <View style={styles.goalItem}>
+              <Text style={styles.goalText} >
+                {itemData.item.text}
+              </Text>
+            </View>
+          )
+        }}
+          keyExtractor={(item, index) => item.key}
+          alwaysBounceVertical={false}
+        />
+        {/* <ScrollView>
           {courseGoals.map((goal, index) => (
             <View style={styles.goalItem} key={`${goal}-${index}`}>
               <Text style={styles.goalText} >
@@ -30,7 +47,7 @@ export default function App() {
               </Text>
             </View>
           ))}
-        </ScrollView>
+        </ScrollView> */}
       </View>
     </View>
   );
