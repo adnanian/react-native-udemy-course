@@ -4,7 +4,10 @@ export default function GoalInput(props) {
     return (
         <Modal visible={props.open} animationType='slide'>
             <View style={styles.inputContainer}>
-                <Image styles={styles.image} source={require('../assets/images/goal.png')} />
+                <Image
+                    style={styles.image}
+                    source={require('../assets/images/goal.png')}
+                />
                 <TextInput
                     style={styles.textInput}
                     placeholder='Your course goal!'
